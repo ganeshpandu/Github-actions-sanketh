@@ -8,7 +8,6 @@ on:
 env:
   APP_NAME: frontend-app
   NODE_ENV: production
-  NODE_VERSION: 18
 
 jobs:
 
@@ -27,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -39,15 +38,29 @@ jobs:
 
   test:
     needs: build
+
+    strategy:
+      matrix:
+        node: [16, 18, 20]
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend-app
+
       - name: Run tests
         run: |
-          echo "Running tests for $APP_NAME"
+          echo "Running tests for $APP_NAME on Node ${{ matrix.node }}"
           npm test
         working-directory: frontend-app
 
