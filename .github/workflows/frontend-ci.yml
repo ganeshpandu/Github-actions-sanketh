@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  APP_NAME: frontend-app
+  NODE_ENV: production
+  NODE_VERSION: 18
+
 jobs:
 
   build:
@@ -14,10 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Node
+      - name: Print environment info
+        run: |
+          echo "Application: $APP_NAME"
+          echo "Environment: $NODE_ENV"
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
         run: npm install
@@ -32,10 +42,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Run tests
-        run: npm test
+        run: |
+          echo "Running tests for $APP_NAME"
+          npm test
         working-directory: frontend-app
 
   deploy:
@@ -44,4 +57,6 @@ jobs:
 
     steps:
       - name: Deploy step
-        run: echo "Deploying frontend application 🚀"
+        run: |
+          echo "Deploying $APP_NAME 🚀"
+          echo "Environment: $NODE_ENV"
