@@ -1,0 +1,8 @@
+{
+  "name": "frontend-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo Building frontend app...",
+    "test": "echo Running frontend tests..."
+  }
+}
