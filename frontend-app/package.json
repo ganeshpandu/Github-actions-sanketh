@@ -4,5 +4,8 @@
   "scripts": {
     "build": "echo Building frontend app...",
     "test": "echo Running frontend tests..."
+  },
+  "dependencies": {
+    "serve": "^14.2.6"
   }
 }
