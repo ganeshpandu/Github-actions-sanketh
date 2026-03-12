@@ -36,6 +36,7 @@ jobs:
         run: npm run build
         working-directory: frontend-app
 
+
   test:
     needs: build
 
@@ -64,16 +65,13 @@ jobs:
           npm test
         working-directory: frontend-app
 
+
   deploy:
     needs: test
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/deploy-reusable.yml
 
-    steps:
-      - name: Deploy step
-        env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+    with:
+      environment: production
 
-        run: |
-          echo "Deploying $APP_NAME 🚀"
-          echo "Environment: $NODE_ENV"
-          echo "Token length: ${#DEPLOY_TOKEN}"
+    secrets:
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

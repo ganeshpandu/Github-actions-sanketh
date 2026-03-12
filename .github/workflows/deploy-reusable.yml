@@ -1,0 +1,25 @@
+name: Deploy Reusable Workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      DEPLOY_TOKEN:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deployment info
+        run: |
+          echo "Deploying to environment: ${{ inputs.environment }}"
+          echo "Using secure deployment token"
+
+      - name: Simulated deployment
+        run: |
+          echo "Deployment successful 🚀"
