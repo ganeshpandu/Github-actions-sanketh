@@ -57,8 +57,8 @@ jobs:
 
     steps:
       - name: Deploy step
-          env:
-            DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
         run: |
           echo "Deploying $APP_NAME 🚀"
