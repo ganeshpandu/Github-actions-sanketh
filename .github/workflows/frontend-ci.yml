@@ -66,12 +66,31 @@ jobs:
         working-directory: frontend-app
 
 
-  deploy:
+  deploy-staging:
     needs: test
-    uses: ./.github/workflows/deploy-reusable.yml
+    runs-on: ubuntu-latest
 
-    with:
-      environment: production
+    environment:
+      name: staging
+      url: https://staging.example.com
 
-    secrets:
-      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+    steps:
+      - name: Deploy to staging
+        run: |
+          echo "Deploying $APP_NAME to STAGING 🚀"
+          echo "Using staging environment"
+
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+      url: https://example.com
+
+    steps:
+      - name: Deploy to production
+        run: |
+          echo "Deploying $APP_NAME to PRODUCTION 🚀"
+          echo "Using production environment"
